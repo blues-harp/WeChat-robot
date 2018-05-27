@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import requests
-import itchat  # 这是一个用于微信回复的库
 import sys
+import random
+import itchat  # 这是一个用于微信回复的库
+import requests
+
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 KEY_FOR_YS = 'd8bbf2a4678d401a849e3a55e69797e8'
 KEY = '126539e4ee8d4a2ab82f40aa9c939f84'
+KEY_2 = '7a6bf5818ac8497ba5663f8492c926a7'
+key_list = [KEY, KEY_2]
 
 
 # 向api发送请求
@@ -30,7 +35,8 @@ def get_response(msg, key=KEY):
 @itchat.msg_register(itchat.content.TEXT, isFriendChat=False, isGroupChat=True)
 def turing_reply_for_group(msg):
     if is_auto_replay_for_group(msg):
-        turing_response = get_response(msg['Text'], KEY)
+        index = random.randint(0, 1)
+        turing_response = get_response(msg['Text'], key_list[index])
         prefix = ''
         if msg.isAt:
             prefix = '@' + msg.ActualNickName + ' '
