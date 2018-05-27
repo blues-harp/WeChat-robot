@@ -1,14 +1,22 @@
-# coding:utf-8
-
+# -*- coding: utf-8 -*-
 import itchat
 
 
 @itchat.msg_register(itchat.content.TEXT)
 def text_reply(msg):
-    return msg.text
+    print(msg.text)
+    return "this is from robot: " + msg.text
 
 
-itchat.auto_login(enableCmdQR=True)
+# itchat.auto_login(enableCmdQR=2)
+itchat.auto_login()
+ret = itchat.search_chatrooms(u"十年")
+ret2 = itchat.update_chatroom(ret[0].UserName)
+for item in ret2.MemberList:
+    print(item.NickName + "=" + item.DisplayName)
+
+
+
 itchat.run()
 
 # ret = itchat.get_friends()
